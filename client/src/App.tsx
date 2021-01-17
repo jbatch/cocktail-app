@@ -22,7 +22,7 @@ export function App(props: AppProps) {
     (async () => {
       const { loggedIn, user } = await checkLoggedIn();
       if (!loggedIn) {
-        setUser({ userName: '', displayName: '', loggedIn: false, id: '', isAdmin: false });
+        setUser({ userName: '', loggedIn: false, id: '', isAdmin: false });
         navigate(`${appContext.basePathPrefix}/sign-in`);
         return;
       }

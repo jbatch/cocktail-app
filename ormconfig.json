@@ -2,9 +2,9 @@
   "type": "mysql",
   "host": "localhost",
   "port": 3306,
-  "username": "gday",
+  "username": "my-home-bar",
   "password": "password",
-  "database": "gday",
+  "database": "my_home_bar",
   "entities": ["server/entity/*.ts"],
   "migrations": ["server/migration/*.ts"],
   "cli": {

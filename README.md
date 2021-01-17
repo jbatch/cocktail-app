@@ -1,4 +1,4 @@
-# 2020 Node Typescript Webpack Fullstack Template
+# My Home Bar
 
 What it says on the box:
 
@@ -15,5 +15,5 @@ What it says on the box:
 ## Getting Started
 
 ```
-git clone git@github.com:lukebatchelor/2020-typescript-webpack-static-app-template.git
+
 ```

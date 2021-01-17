@@ -4,9 +4,9 @@ services:
     image: mysql:5.7
     restart: always
     environment:
-      MYSQL_DATABASE: 'gday'
+      MYSQL_DATABASE: 'my-home-bar'
       # So you don't have to use root, but you can if you like
-      MYSQL_USER: 'gday'
+      MYSQL_USER: 'my-home-bar'
       # You can use whatever password you like
       MYSQL_PASSWORD: 'password'
       # Password for root access
@@ -24,7 +24,7 @@ services:
     restart: always
     image: redis:4.0
     container_name: redis-server
-    command: /bin/bash -c 'redis-server --appendonly yes'
+    command: /bin/bash -c 'redis-server --appendonly yes --requirepass password'
     sysctls:
       - net.core.somaxconn=65535
     ports:

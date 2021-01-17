@@ -1,9 +1,8 @@
 {
-  "name": "2020-node-typescript-webpack-static-app-template",
+  "name": "my-home-bar",
   "private": true,
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Luke.Batchelor <batchelor.luke+git@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "node dist/index.js",

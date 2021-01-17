@@ -24,7 +24,7 @@ function configureSessionMiddleware(app: Application) {
   const store = new redisStore({ client: new Redis(process.env.REDIS_URL) });
   app.use(
     session({
-      name: 'gday-session',
+      name: 'mhb-session',
       store,
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30, // 1 month

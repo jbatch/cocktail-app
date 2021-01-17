@@ -1,4 +1,4 @@
-const CURRENT_CLIENT_VERSION = 3;
+const CURRENT_CLIENT_VERSION = 1;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isJson(str: any) {
@@ -69,21 +69,8 @@ export async function attemptLogin(userName: string, password: string) {
   return postRequest<PostLoginRequestBody, PostLoginResponseBody>('/api/users/authenticate', body);
 }
 
-export async function logout() {
-  return getRequest<any>('/api/users/logout');
-}
-
 export async function checkLoggedIn() {
-  return {
-    user: {
-      userName: 'foo',
-      displayName: 'foo',
-      isAdmin: true,
-      id: '1',
-    },
-    loggedIn: true,
-  };
-  // return getRequest<any>('/api/users/authenticated');
+  return getRequest<GetAuthenticatedResponseBody>('/api/users/authenticated');
 }
 
 export async function createUser(userObj: PostSignupRequestBody) {

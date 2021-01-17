@@ -18,7 +18,6 @@ export default async function runStartupTasks() {
       id: `U${crypto.randomBytes(12).toString('hex')}`.substr(0, 12),
       userName: defaultAdminUserName,
       password: bcrypt.hashSync(defaultAdminPassword, bcrypt.genSaltSync(8)),
-      displayName: defaultAdminUserName,
       isAdmin: true,
     });
     await user.save();

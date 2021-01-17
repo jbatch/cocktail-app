@@ -24,7 +24,6 @@ usersRoutes.post(
       id: `U${crypto.randomBytes(12).toString('hex')}`.substr(0, 12),
       userName,
       password: bcrypt.hashSync(password, bcrypt.genSaltSync(8)),
-      displayName: userName,
       isAdmin: true,
     });
     await user.save();
@@ -69,9 +68,6 @@ function mapUser(user: User): IUser {
   return {
     id: user.id,
     userName: user.userName,
-    displayName: user.displayName,
-    avatarUrl: user.avatarUrl,
-    status: user.status,
     isAdmin: user.isAdmin,
   };
 }

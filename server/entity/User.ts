@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, CreateDateColumn, UpdateDateColumn, Column, BaseEntity } from 'typeorm';
 
 @Entity()
 export class User extends BaseEntity implements IUser {
@@ -10,15 +10,6 @@ export class User extends BaseEntity implements IUser {
 
   @Column()
   password!: string;
-
-  @Column({ name: 'display_name' })
-  displayName!: string;
-
-  @Column({ name: 'avatar_url', nullable: true })
-  avatarUrl?: string;
-
-  @Column({ nullable: true })
-  status?: string;
 
   @Column({ name: 'is_admin' })
   isAdmin!: boolean;

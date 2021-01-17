@@ -100,7 +100,7 @@ export function SignUpPage(props: SignUpPageProps) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography variant="h2">G&apos;day</Typography>
+        <Typography variant="h2">My Home Bar</Typography>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
