@@ -16,7 +16,7 @@ export function HomePage(props: HomeProps) {
           <IconButton color="inherit" aria-label="Home" edge="start">
             <Avatar src="/android-chrome-192x192.png" alt="LB" />
           </IconButton>
-          <Typography variant="h5">2020 Typescript Webpack Static App Template</Typography>
+          <Typography variant="h5">My Home Bar</Typography>
         </Toolbar>
       </AppBar>
     </Container>
