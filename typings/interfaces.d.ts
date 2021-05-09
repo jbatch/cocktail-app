@@ -6,6 +6,11 @@ declare global {
     userName: string;
     isAdmin: boolean;
   }
+
+  interface IIngredient {
+    name: string;
+    imageUrl: string;
+  }
 }
 
 export type ExpressRequestUser = IUser;

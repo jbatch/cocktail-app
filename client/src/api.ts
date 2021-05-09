@@ -1,5 +1,3 @@
-const CURRENT_CLIENT_VERSION = 1;
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isJson(str: any) {
   try {
@@ -14,7 +12,7 @@ async function getRequest<Res>(url: string) {
   try {
     const res = await fetch(url, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', 'x-client-version': String(CURRENT_CLIENT_VERSION) },
+      headers: { 'Content-Type': 'application/json' },
     }).then((r) => r.json());
 
     return res as Res;
@@ -28,7 +26,7 @@ async function postRequest<Req, Res>(url: string, body: Req) {
   try {
     const res = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-client-version': String(CURRENT_CLIENT_VERSION) },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     }).then(async (r) => {
       if (!r.ok) {
@@ -53,7 +51,7 @@ async function deleteRequest<Req, Res>(url: string, body?: Req) {
   try {
     const res = await fetch(url, {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json', 'x-client-version': String(CURRENT_CLIENT_VERSION) },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     }).then((r) => r.json());
 
@@ -76,4 +74,8 @@ export async function checkLoggedIn() {
 export async function createUser(userObj: PostSignupRequestBody) {
   const body = userObj;
   return postRequest<PostSignupRequestBody, PostSignupResponseBody>('/api/users/signup', body);
+}
+
+export async function getIngredients() {
+  return getRequest<GetIngredientsResponse>('/api/ingredients');
 }
