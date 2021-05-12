@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isJson(str: any) {
   try {
     JSON.parse(str);
@@ -8,17 +7,28 @@ function isJson(str: any) {
   return true;
 }
 
+async function handleErrorOrParseResult(response: Response) {
+  // catch any unstructured errors otherwise parse the response
+  const json = await response.json();
+  if (json.error) throw json;
+  return json;
+}
+
+// log and rethrow an error unwrapping it if it's an actual error
+function logAndThrowUnwrappedError(error: any) {
+  console.error(error);
+  throw error;
+}
+
 async function getRequest<Res>(url: string) {
   try {
     const res = await fetch(url, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
-    }).then((r) => r.json());
-
+    }).then(handleErrorOrParseResult);
     return res as Res;
   } catch (err) {
-    console.error(err);
-    throw err;
+    logAndThrowUnwrappedError(err);
   }
 }
 
@@ -28,22 +38,10 @@ async function postRequest<Req, Res>(url: string, body: Req) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
-    }).then(async (r) => {
-      if (!r.ok) {
-        throw new Error(await r.text());
-      }
-      return r.json();
-    });
-
+    }).then(handleErrorOrParseResult);
     return res as Res;
   } catch (err) {
-    if (err.message && isJson(err.message)) {
-      const errorObject = JSON.parse(err.message);
-      console.log(errorObject);
-    } else {
-      console.error(err);
-    }
-    throw err;
+    logAndThrowUnwrappedError(err);
   }
 }
 
@@ -53,12 +51,11 @@ async function deleteRequest<Req, Res>(url: string, body?: Req) {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
-    }).then((r) => r.json());
+    }).then(handleErrorOrParseResult);
 
     return res as Res;
   } catch (err) {
-    console.error(err);
-    return null;
+    logAndThrowUnwrappedError(err);
   }
 }
 
@@ -78,4 +75,8 @@ export async function createUser(userObj: PostSignupRequestBody) {
 
 export async function getIngredients() {
   return getRequest<GetIngredientsResponse>('/api/ingredients');
+}
+
+export async function createIngredient(body: CreateIngredientRequestBody) {
+  return postRequest<CreateIngredientRequestBody, CreateIngredientResponseBody>('/api/ingredients', body);
 }

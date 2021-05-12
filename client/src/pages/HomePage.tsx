@@ -20,7 +20,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import LocalBarIcon from '@material-ui/icons/LocalBar';
 import EcoIcon from '@material-ui/icons/Eco';
 import MenuIcon from '@material-ui/icons/Menu';
-import { RouteComponentProps } from '@reach/router';
+import { navigate, RouteComponentProps, Router } from '@reach/router';
 import clsx from 'clsx';
 
 import Recipes from '../components/Recipes';
@@ -134,27 +134,6 @@ export function HomePage(props: HomeProps) {
     setOpen(false);
   };
 
-  // Content selected
-  type Page = 'Recipes' | 'Ingredients' | 'My Bar';
-  type ClickEvent = React.MouseEvent<HTMLDivElement, MouseEvent>;
-  const [selectedPage, setSelectedPage] = useState<Page>('Ingredients');
-  const handlePageSelected = (p: Page) => {
-    console.log('Page selected', p);
-    setSelectedPage(p);
-  };
-  const getSelectedPageComponent = () => {
-    switch (selectedPage) {
-      case 'Recipes':
-        return <Recipes />;
-      case 'Ingredients':
-        return <Ingredients />;
-      case 'My Bar':
-        return <Bar />;
-      default:
-        return <Recipes />;
-    }
-  };
-
   return (
     <Container className={clsx(classes.containerReset, classes.outerContainer)}>
       <CssBaseline />
@@ -172,13 +151,13 @@ export function HomePage(props: HomeProps) {
         </div>
         <Divider />
         <List>
-          <ListItem button onClick={() => handlePageSelected('Recipes')}>
+          <ListItem button onClick={() => navigate('/recipies')}>
             <ListItemIcon>
               <MenuBookIcon />
             </ListItemIcon>
             <ListItemText primary="Cocktails" />
           </ListItem>
-          <ListItem button onClick={() => handlePageSelected('Ingredients')}>
+          <ListItem button onClick={() => navigate('/ingredients')}>
             <ListItemIcon>
               <EcoIcon />
             </ListItemIcon>
@@ -187,7 +166,7 @@ export function HomePage(props: HomeProps) {
         </List>
         <Divider />
         <List>
-          <ListItem button onClick={() => handlePageSelected('My Bar')}>
+          <ListItem button onClick={() => navigate('/bar')}>
             <ListItemIcon>
               <LocalBarIcon />
             </ListItemIcon>
@@ -217,7 +196,11 @@ export function HomePage(props: HomeProps) {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg" className={classes.container}>
-            {getSelectedPageComponent()}
+            <Router>
+              <Recipes path="/recipies" />
+              <Ingredients path="/ingredients" />
+              <Bar path="/bar" />
+            </Router>
           </Container>
         </main>
       </Container>

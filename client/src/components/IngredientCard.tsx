@@ -73,12 +73,16 @@ function IngredientCard(props: Props) {
   );
 }
 
-function NewIngredientCard() {
+interface NewIngredientProps {
+  onClick: () => void;
+}
+function NewIngredientCard(props: NewIngredientProps) {
   const classes = useStyles();
+  const { onClick } = props;
   return (
     <Card className={clsx(classes.card, classes.newIngredientCard)}>
       <CardContent className={classes.column}>
-        <IconButton>
+        <IconButton onClick={onClick}>
           <AddCircleIcon style={{ fontSize: 80 }} color="primary" />
         </IconButton>
         <Typography variant="body2" color="textSecondary" component="p">

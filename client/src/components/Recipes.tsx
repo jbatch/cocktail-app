@@ -1,5 +1,7 @@
 import React from 'react';
+import { RouteComponentProps } from '@reach/router';
 
-export default function Recipes() {
+type Props = {} & RouteComponentProps;
+export default function Recipes(props: Props) {
   return <>Recipes</>;
 }

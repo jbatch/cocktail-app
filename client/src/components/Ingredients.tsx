@@ -1,11 +1,13 @@
 import { Container, makeStyles, Typography } from '@material-ui/core';
+import { RouteComponentProps } from '@reach/router';
+import queryString from 'querystring';
 import React, { useEffect, useState } from 'react';
+
 import { getIngredients } from '../api';
-
 import { IngredientCard, NewIngredientCard } from './IngredientCard';
+import NewIngredientForm from './NewIngredientForm';
 
-interface Props {}
-
+type Props = {} & RouteComponentProps;
 const useStyles = makeStyles((theme) => ({
   card: {
     maxWidth: '300px',
@@ -22,9 +24,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function Ingredients(props: Props) {
-  const {} = props;
+  const { location } = props;
   const classes = useStyles();
   const [ingredients, setIngredients] = useState<Array<IIngredient>>([]);
+
+  // Have to strip '?' from search string.
+  const qs = location.search === '' ? '' : location.search.substr(1);
+  const query = queryString.parse(qs);
+  const makingNewIngredient = 'new' in query;
 
   const fetchIngredients = async () => {
     const { ingredients } = await getIngredients();
@@ -36,15 +43,28 @@ function Ingredients(props: Props) {
     fetchIngredients();
   }, []);
 
+  const showNewIngredientDialog = () => {
+    props.navigate('?new');
+  };
+
+  const closeNewIngredientDialog = () => {
+    props.navigate('');
+    fetchIngredients();
+  };
+
+  const ingredientListContent = (
+    <Container className={classes.ingredientContainer}>
+      <NewIngredientCard onClick={showNewIngredientDialog} />
+      {ingredients.map((i, index) => (
+        <IngredientCard key={`ingredient-card-${index}`} name={i.name} imageUrl={i.imageUrl} />
+      ))}
+    </Container>
+  );
+
   return (
     <>
-      <Typography variant="h4">Ingredients</Typography>
-      <Container className={classes.ingredientContainer}>
-        <NewIngredientCard />
-        {ingredients.map((i) => (
-          <IngredientCard name={i.name} imageUrl={i.imageUrl} />
-        ))}
-      </Container>
+      <Typography variant="h4">{makingNewIngredient ? 'New Ingredient' : 'Ingredients'}</Typography>
+      {makingNewIngredient ? <NewIngredientForm exitCallback={closeNewIngredientDialog} /> : ingredientListContent}
     </>
   );
 }
