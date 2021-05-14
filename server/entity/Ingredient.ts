@@ -1,4 +1,13 @@
-import { Entity, CreateDateColumn, UpdateDateColumn, Column, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Column,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from 'typeorm';
+import { RecipeIngredient } from './RecipeIngredient';
 
 @Entity()
 export class Ingredient extends BaseEntity {
@@ -10,6 +19,9 @@ export class Ingredient extends BaseEntity {
 
   @Column({ nullable: true })
   imageUrl!: string;
+
+  @OneToMany(() => RecipeIngredient, (recipeIngredients) => recipeIngredients.ingredient)
+  public recipies!: RecipeIngredient[];
 
   @CreateDateColumn()
   createdAt: Date;

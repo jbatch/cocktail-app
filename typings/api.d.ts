@@ -42,3 +42,23 @@ declare type CreateIngredientRequestBody = { name: string; imageUrl: string };
 declare type CreateIngredientRequest = TypedRequest<{}, CreateIngredientRequestBody, {}>;
 declare type CreateIngredientResponseBody = { ingredient: IIngredient };
 declare type CreateIngredientResponse = TypedResponse<CreateIngredientResponseBody>;
+
+/**
+ * Recipes Routes
+ */
+
+// GET /api/Recipes
+declare type GetRecipesRequestBody = {};
+declare type GetRecipesRequest = TypedRequest<{}, GetRecipesRequestBody, {}>;
+declare type GetRecipesResponseBody = { recipes: Array<IRecipe> };
+declare type GetRecipesResponse = TypedResponse<GetRecipesResponseBody>;
+
+// POST /api/Recipes
+declare type CreateRecipeRequestBody = {
+  name: string;
+  imageUrl: string;
+  ingredients: Array<{ ingredientId: number; amount: number; unit: IngredientUnit }>;
+};
+declare type CreateRecipeRequest = TypedRequest<{}, CreateRecipeRequestBody, {}>;
+declare type CreateRecipeResponseBody = { recipe: IRecipe };
+declare type CreateRecipeResponse = TypedResponse<CreateRecipeResponseBody>;
