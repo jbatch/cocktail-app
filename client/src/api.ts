@@ -80,3 +80,11 @@ export async function getIngredients() {
 export async function createIngredient(body: CreateIngredientRequestBody) {
   return postRequest<CreateIngredientRequestBody, CreateIngredientResponseBody>('/api/ingredients', body);
 }
+
+export async function getRecipes() {
+  return getRequest<GetRecipesResponse>('/api/recipes');
+}
+
+export async function createRecipe(body: CreateRecipeRequestBody) {
+  return postRequest<CreateRecipeRequestBody, CreateRecipeResponseBody>('/api/recipes', body);
+}
