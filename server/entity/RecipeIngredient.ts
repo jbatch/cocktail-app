@@ -14,13 +14,13 @@ export class RecipeIngredient extends BaseEntity {
   @Column()
   public ingredient_id!: number;
 
-  @Column({ type: 'decimal' })
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   public amount!: number;
 
   @Column()
   public unit!: string;
 
-  @ManyToOne(() => Recipe, (recipe: Recipe) => recipe.ingredients)
+  @ManyToOne(() => Recipe, (recipe: Recipe) => recipe.ingredients, { onDelete: 'CASCADE' })
   public recipe!: Recipe;
 
   @ManyToOne(() => Ingredient, (ingredient: Ingredient) => ingredient.recipies)

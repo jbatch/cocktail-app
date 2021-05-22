@@ -9,14 +9,12 @@ import { App } from './App';
 const theme = responsiveFontSizes(createMuiTheme());
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <AppContextProvider>
-        <UserContextProvider>
-          <App />
-        </UserContextProvider>
-      </AppContextProvider>
-    </ThemeProvider>
-  </React.StrictMode>,
+  <ThemeProvider theme={theme}>
+    <AppContextProvider>
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    </AppContextProvider>
+  </ThemeProvider>,
   document.getElementById('root')
 );
