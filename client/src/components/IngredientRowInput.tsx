@@ -19,6 +19,7 @@ interface Props {
   errorField?: string;
   ingredients: Array<IIngredient>;
   ingredientRowData: IngredientData;
+  deletable: boolean;
   onDeleteIngredientRow: (index: number) => void;
   onIngredientPicked: (index: number, ingredientId: number) => void;
   onAmountChange: (index: number, amount: string) => void;
@@ -75,6 +76,7 @@ function IngredientRowInput(props: Props) {
     errorField,
     ingredients,
     ingredientRowData,
+    deletable,
     onDeleteIngredientRow,
     onIngredientPicked,
     onAmountChange,
@@ -82,8 +84,8 @@ function IngredientRowInput(props: Props) {
   } = props;
   const classes = useStyles();
   return (
-    <Box key={`ingredient-row-${index}`} className={classes.ingredientDataRow}>
-      {index !== 0 && (
+    <Box className={classes.ingredientDataRow}>
+      {deletable && (
         <IconButton
           className={classes.deleteIngredientRowButton}
           size="small"
@@ -93,7 +95,7 @@ function IngredientRowInput(props: Props) {
         </IconButton>
       )}
       <FormControl
-        className={clsx(classes.ingredientSelect, index === 0 && classes.missingDeletePadding)}
+        className={clsx(classes.ingredientSelect, deletable || classes.missingDeletePadding)}
         error={errorField === `ingredient-row-${index}`}
       >
         <InputLabel>Ingredient</InputLabel>

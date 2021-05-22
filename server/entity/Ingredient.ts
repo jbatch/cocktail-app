@@ -21,7 +21,7 @@ export class Ingredient extends BaseEntity {
   imageUrl!: string;
 
   @OneToMany(() => RecipeIngredient, (recipeIngredients) => recipeIngredients.ingredient)
-  public recipies!: RecipeIngredient[];
+  public recipes!: RecipeIngredient[];
 
   @CreateDateColumn()
   createdAt: Date;

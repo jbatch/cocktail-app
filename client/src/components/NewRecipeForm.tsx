@@ -31,6 +31,24 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
     marginRight: 'auto',
   },
+  ingredientFieldGroup: {
+    borderColor: 'rgba(0, 0, 0, 0.23)',
+    display: 'block',
+    marginInlineStart: '2px',
+    marginInlineEnd: '2px',
+    paddingBlockStart: '0.35em',
+    paddingInlineStart: '0.75em',
+    paddingInlineEnd: '0.75em',
+    paddingBlockEnd: '0.625em',
+    minInlineSize: 'min-content',
+    borderWidth: '2px',
+    borderStyle: 'groove',
+    // borderColor: 'threedface',
+    borderImage: 'initial',
+  },
+  methodTextField: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 function NewIngredientForm(props: Props) {
@@ -45,6 +63,8 @@ function NewIngredientForm(props: Props) {
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  const DEFAULT_METHOD_EXAMPLE = '1. Combine ingredients in shaker with ice\n2. Strain into martini glass';
   const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setError('');
     setErrorField('');
@@ -167,13 +187,16 @@ function NewIngredientForm(props: Props) {
               error={errorField === 'imageUrl'}
             />
             <Typography variant="h6">Ingredients</Typography>
+
             {ingredientData.map((i, index) => {
               return (
                 <IngredientRowInput
+                  key={`ingredient-row-${index}`}
                   index={index}
                   errorField={errorField}
                   ingredients={ingredients}
                   ingredientRowData={i}
+                  deletable={ingredientData.length > 1}
                   onDeleteIngredientRow={onDeleteIngredientRow}
                   onIngredientPicked={onIngredientPicked}
                   onAmountChange={onAmountChange}
@@ -189,6 +212,15 @@ function NewIngredientForm(props: Props) {
             >
               <AddIcon />
             </IconButton>
+
+            <TextField
+              className={classes.methodTextField}
+              variant="outlined"
+              multiline
+              rows={4}
+              label="Method"
+              defaultValue={DEFAULT_METHOD_EXAMPLE}
+            />
           </Box>
         </form>
         <Box display="flex" justifyContent="space-between" width={300} mb={4} mt={2}>

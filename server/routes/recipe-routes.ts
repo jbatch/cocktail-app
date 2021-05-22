@@ -26,6 +26,21 @@ recipesRoutes.get(
   })
 );
 
+recipesRoutes.get(
+  '/:recipeId',
+  wrapExpressPromise<GetRecipeRequest, GetRecipeResponse>(async (req, res) => {
+    const { recipeId } = req.params;
+    const recipe = await Recipe.findOne({
+      where: { _id: recipeId },
+      relations: ['ingredients', 'ingredients.ingredient'],
+    });
+
+    return {
+      recipe: mapRecipe(recipe),
+    };
+  })
+);
+
 recipesRoutes.post(
   '/',
   wrapExpressPromise<CreateRecipeRequest, CreateRecipeResponse>(async (req, res) => {

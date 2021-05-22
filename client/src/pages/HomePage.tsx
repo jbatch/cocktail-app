@@ -23,9 +23,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { navigate, RouteComponentProps, Router } from '@reach/router';
 import clsx from 'clsx';
 
-import Recipes from '../components/Recipes';
-import Ingredients from '../components/Ingredients';
-import Bar from '../components/Bar';
+import Recipes from './Recipes';
+import Ingredients from './Ingredients';
+import Bar from './Bar';
+import RecipePage from './RecipePage';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -154,7 +155,7 @@ export function HomePage(props: HomeProps) {
         </div>
         <Divider />
         <List>
-          <ListItem button onClick={() => navigate('/recipies')}>
+          <ListItem button onClick={() => navigate('/recipes')}>
             <ListItemIcon>
               <MenuBookIcon />
             </ListItemIcon>
@@ -200,9 +201,10 @@ export function HomePage(props: HomeProps) {
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg" className={classes.container}>
             <Router>
-              <Recipes path="/recipies" />
+              <Recipes path="/recipes" />
               <Ingredients path="/ingredients" />
               <Bar path="/bar" />
+              <RecipePage path="/recipes/:recipeId" />
             </Router>
           </Container>
         </main>

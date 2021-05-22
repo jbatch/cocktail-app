@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from '@reach/router';
 import {
   Button,
   Checkbox,
   Chip,
   Container,
   FormControl,
-  Input,
   InputLabel,
   ListItemText,
   makeStyles,
@@ -15,12 +12,15 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import CancelIcon from '@material-ui/icons/Cancel';
-import { getIngredients, getRecipes } from '../api';
-import { RecipeCard } from './RecipeCard';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import { RouteComponentProps } from '@reach/router';
 import queryString from 'querystring';
-import NewRecipeForm from './NewRecipeForm';
+import React, { useEffect, useState } from 'react';
+
+import { getIngredients, getRecipes } from '../api';
+import NewRecipeForm from '../components/NewRecipeForm';
+import { RecipeCard } from '../components/RecipeCard';
 
 type Props = {} & RouteComponentProps;
 
@@ -110,6 +110,10 @@ export default function Recipes(props: Props) {
     setIngredientsFilter(ingredientsFilter.filter((i) => i !== value));
   };
 
+  const onRecipeCardClick = (recipeId: number) => {
+    props.navigate(`/recipes/${recipeId}`);
+  };
+
   const filteredRecipes = recipes
     .filter((r) => r.name.toLowerCase().includes(nameFilter.toLowerCase()))
     .filter((r) =>
@@ -164,7 +168,7 @@ export default function Recipes(props: Props) {
       </Container>
       <Container className={classes.recipesContainer}>
         {filteredRecipes.map((r) => (
-          <RecipeCard key={r.id} name={r.name} imageUrl={r.imageUrl} />
+          <RecipeCard key={r.id} name={r.name} imageUrl={r.imageUrl} onClick={() => onRecipeCardClick(r.id)} />
         ))}
       </Container>
     </>

@@ -4,8 +4,8 @@ import queryString from 'querystring';
 import React, { useEffect, useState } from 'react';
 
 import { getIngredients } from '../api';
-import { IngredientCard, NewIngredientCard } from './IngredientCard';
-import NewIngredientForm from './NewIngredientForm';
+import { IngredientCard, NewIngredientCard } from '../components/IngredientCard';
+import NewIngredientForm from '../components/NewIngredientForm';
 
 type Props = {} & RouteComponentProps;
 const useStyles = makeStyles((theme) => ({

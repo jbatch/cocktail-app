@@ -10,6 +10,7 @@ const config = {
   entry: './index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist', 'client'),
+    publicPath: '/',
   },
   devServer: {
     contentBase: path.resolve(__dirname, './public'),

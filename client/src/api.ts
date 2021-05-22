@@ -88,3 +88,7 @@ export async function getRecipes() {
 export async function createRecipe(body: CreateRecipeRequestBody) {
   return postRequest<CreateRecipeRequestBody, CreateRecipeResponseBody>('/api/recipes', body);
 }
+
+export async function getRecipe(recipeId: number) {
+  return getRequest<GetRecipeResponse>(`/api/recipes/${recipeId}`);
+}

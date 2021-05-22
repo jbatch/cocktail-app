@@ -1,14 +1,4 @@
-import {
-  Avatar,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  IconButton,
-  makeStyles,
-  Typography,
-} from '@material-ui/core';
+import { Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, makeStyles } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import React from 'react';
@@ -17,6 +7,7 @@ interface Props {
   name: string;
   imageUrl: string;
   showActions?: boolean;
+  onClick?: () => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -25,18 +16,25 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   card: {
-    minWidth: '300px',
-    minHeight: '300px',
+    maxWidth: '250px',
+    maxHeight: '250px',
+    minWidth: '200px',
+    minHeight: '200px',
     marginRight: '30px',
     marginBottom: '30px',
   },
+  cardHeader: {
+    padding: theme.spacing(1),
+  },
   avatar: {
     backgroundColor: 'red',
+    width: theme.spacing(3),
+    height: theme.spacing(3),
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
-    backgroundSize: 'contain',
+    paddingTop: '56.23%', // 56.23 = 16:9
+    backgroundSize: 'cover', // contain
   },
   newIngredientCard: {
     display: 'flex',
@@ -50,31 +48,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RecipeCard(props: Props) {
-  const { name, imageUrl, showActions = true } = props;
-  const firstLetter = name.charAt(0);
+  const { name, imageUrl, showActions = true, onClick } = props;
   const classes = useStyles();
   return (
-    <Card className={classes.card}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            {firstLetter}
-          </Avatar>
-        }
-        title={name}
-      />
+    <Card className={classes.card} onClick={() => onClick && onClick()}>
+      <CardHeader className={classes.cardHeader} title={name} titleTypographyProps={{ variant: 'subtitle1' }} />
       <CardMedia className={classes.media} image={imageUrl} title={name} />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {name}
-        </Typography>
-      </CardContent>
+      <CardContent></CardContent>
       {showActions && (
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
+          <IconButton>
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="share">
+          <IconButton>
             <ShareIcon />
           </IconButton>
         </CardActions>
