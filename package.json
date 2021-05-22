@@ -10,6 +10,7 @@
     "build": "yarn clean && yarn build:client && yarn build:server",
     "build:client": "webpack --mode=production",
     "build:server": "tsc -p server.tsconfig.json",
+    "prepack": "yarn build",
     "dev": "concurrently --kill-others-on-fail 'yarn dev-server' 'yarn dev-client'",
     "dev:server": "ts-node-dev --project server.tsconfig.json --watch 'server/**/*.ts' server/index.ts | ./node_modules/.bin/pino-pretty",
     "dev:client": "webpack-dev-server",
@@ -18,7 +19,8 @@
     "typecheck": "tsc --noEmit",
     "db:migrations:show": "TS_NODE_FILES=true ts-node ./node_modules/.bin/typeorm migration:show",
     "db:migrations:generate": "TS_NODE_FILES=true ts-node ./node_modules/.bin/typeorm migration:generate -n",
-    "db:migrations:run": "TS_NODE_FILES=true ts-node ./node_modules/.bin/typeorm migration:run"
+    "db:migrations:run": "TS_NODE_FILES=true ts-node ./node_modules/.bin/typeorm migration:run",
+    "release:pull": "VERSION=`echo $npm_package_version`; curl \"https://github.com/jbatch/cocktail-app/releases/download/v$VERSION/release.tgz\" -sL -o release.tgz; tar -zxvf release.tgz --strip-components=1 package/dist"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
