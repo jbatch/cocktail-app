@@ -27,6 +27,7 @@ declare global {
     id: number;
     name: string;
     imageUrl: string;
+    method: string;
     ingredients: Array<IRecipeIngredient>;
   }
 }

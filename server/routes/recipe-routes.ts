@@ -44,7 +44,7 @@ recipesRoutes.get(
 recipesRoutes.post(
   '/',
   wrapExpressPromise<CreateRecipeRequest, CreateRecipeResponse>(async (req, res) => {
-    const { name, imageUrl, ingredients } = req.body;
+    const { name, imageUrl, ingredients, method } = req.body;
     const existingRecipe = await Recipe.findOne({ name });
     if (existingRecipe) {
       throw new ServiceError(`Recipe already exists: ${name}`, 404);
@@ -53,7 +53,7 @@ recipesRoutes.post(
     // Check all ingredients exist in db before creating recipe.
     await validateIngredientsExist(ingredients.map((i) => i.ingredientId));
 
-    let recipe = await Recipe.save(Recipe.create({ name, imageUrl }));
+    let recipe = await Recipe.save(Recipe.create({ name, imageUrl, method }));
 
     await RecipeIngredient.save(
       ingredients.map(({ ingredientId, amount, unit }) =>
@@ -78,6 +78,7 @@ function mapRecipe(recipe: Recipe): IRecipe {
     id: recipe._id,
     name: recipe.name,
     imageUrl: recipe.imageUrl,
+    method: recipe.method,
     ingredients: recipe.ingredients.map(mapRecipeIngredient),
   };
 }

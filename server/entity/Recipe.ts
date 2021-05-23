@@ -20,6 +20,9 @@ export class Recipe extends BaseEntity {
   @Column({ nullable: true })
   imageUrl!: string;
 
+  @Column({ nullable: true, type: 'text' })
+  method!: string;
+
   @OneToMany(() => RecipeIngredient, (recipeIngredients) => recipeIngredients.recipe)
   public ingredients!: RecipeIngredient[];
 

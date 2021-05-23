@@ -59,6 +59,7 @@ function NewIngredientForm(props: Props) {
   const [ingredientData, setIngredientData] = useState<Array<IngredientData>>([
     { ingredientId: null, amount: '1', unit: 'oz' },
   ]);
+  const [recipeMethod, setRecipeMethod] = useState<string>('');
   const [errorField, setErrorField] = useState<string>('');
 
   const [error, setError] = useState('');
@@ -118,6 +119,11 @@ function NewIngredientForm(props: Props) {
     });
     setIngredientData(newIngredientData);
   };
+  const onMethodChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setError('');
+    setErrorField('');
+    setRecipeMethod(event.target.value);
+  };
 
   const onCreateClick = () => {
     setError('');
@@ -141,6 +147,11 @@ function NewIngredientForm(props: Props) {
         return;
       }
     }
+    if (recipeMethod.length === 0) {
+      setError('Invalid method');
+      setErrorField('method');
+      return;
+    }
     const data = {
       name: recipeName,
       imageUrl: recipeImageUrl,
@@ -149,6 +160,7 @@ function NewIngredientForm(props: Props) {
         amount: Number.parseFloat(amount),
         unit,
       })),
+      method: recipeMethod,
     };
     console.log(data);
     createRecipe(data)
@@ -219,7 +231,9 @@ function NewIngredientForm(props: Props) {
               multiline
               rows={4}
               label="Method"
-              defaultValue={DEFAULT_METHOD_EXAMPLE}
+              onChange={onMethodChanged}
+              error={errorField === 'method'}
+              placeholder={DEFAULT_METHOD_EXAMPLE}
             />
           </Box>
         </form>

@@ -58,6 +58,7 @@ declare type CreateRecipeRequestBody = {
   name: string;
   imageUrl: string;
   ingredients: Array<{ ingredientId: number; amount: number; unit: IngredientUnit }>;
+  method: string;
 };
 declare type CreateRecipeRequest = TypedRequest<{}, CreateRecipeRequestBody, {}>;
 declare type CreateRecipeResponseBody = { recipe: IRecipe };
